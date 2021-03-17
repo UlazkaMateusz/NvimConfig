@@ -1,4 +1,5 @@
 call plug#begin('$HOME/.config/nvim') 
+" call plug#begin('C:\Users\mateuszu\AppData\Local\nvim') 
     " Fzf
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
