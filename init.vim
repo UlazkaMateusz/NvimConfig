@@ -1,6 +1,10 @@
 call plug#begin('$HOME/.config/nvim') 
-    " Fuzzy Finder
-    Plug 'ctrlpvim/ctrlp.vim'
+    " Fzf
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+
+    " Vim rooter
+    Plug 'airblade/vim-rooter'
 
     " Tree
     Plug 'preservim/nerdtree'
@@ -30,14 +34,10 @@ call plug#begin('$HOME/.config/nvim')
 
     " Blade support
     Plug 'jwalton512/vim-blade'
+
 call plug#end()
 
 let mapleader = "\<Space>"
-
-" Ctrl+P
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_show_hidden = 1
 
 " NerdTree
 nnoremap <C-t> :NERDTreeToggle<CR>
@@ -113,3 +113,29 @@ endif
 
 " Edid xaml as XML
 autocmd BufRead,BufNewFile *.xaml :set filetype=xml
+
+" Fzf configuration
+noremap <leader>s :Rg<CR>
+let g:fzf_layout = { 'down': '~20%' }
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+map <C-p> :FZF<CR>
+
+" Set ripgrep as default on windows
+silent !setx FZF_DEFAULT_COMMAND = 'rg --files --hidden -follow --glob . 2> nul'
+
+" Set ripgrep as default on linux
+let FZF_DEFAULT_COMMAND = 'rg --files --hidden -follow --glob . 2> nul'
+
+" Remember last position in file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Coc go to definition
+nmap <silent> gd <Plug>(coc-definition)
