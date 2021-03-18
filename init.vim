@@ -35,7 +35,6 @@ call plug#begin('$HOME/.config/nvim')
 
     " Blade support
     Plug 'jwalton512/vim-blade'
-
 call plug#end()
 
 let mapleader = "\<Space>"
@@ -116,7 +115,7 @@ endif
 autocmd BufRead,BufNewFile *.xaml :set filetype=xml
 
 " Fzf configuration
-noremap <leader>s :Rg<CR>
+noremap <leader>s :Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -128,10 +127,7 @@ command! -bang -nargs=* Rg
 map <C-p> :FZF<CR>
 
 " Set ripgrep as default on windows
-silent !setx FZF_DEFAULT_COMMAND = 'rg --files --hidden -follow --glob . 2> nul'
-
-" Set ripgrep as default on linux
-let FZF_DEFAULT_COMMAND = 'rg --files --hidden -follow --glob . 2> nul'
+silent !setx FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob . 2> nul'
 
 " Remember last position in file
 if has("autocmd")
