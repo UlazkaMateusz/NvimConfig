@@ -136,3 +136,6 @@ endif
 
 " Coc go to definition
 nmap <silent> gd <Plug>(coc-definition)
+
+" Coc go to references
+nmap <silent>gr <Plug>(coc-references)
